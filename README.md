@@ -18,21 +18,21 @@ Any questions or comments, please get in contact!
 >> mex -c code/*.f -outputdir code/
 
 % Offline advective flux code.
->> mex mit_advect_flux.F code/gad_*.o
 % [uflux,vflux,wflux]=mit_advect_flux(timestep,advscheme,dx,dy,dz,rax,ray,rac,mask,uvel,vvel,wvel,scalar);
+>> mex mit_advect_flux.F code/gad_*.o
 
 % Offline explicit (GM) diffusive flux code.
->> mex mit_diffuse_flux.F code/mit_diff_*.o
 % [udiff,vdiff,wediff]=mit_diffuse_flux(dx,dy,dz,umask,vmask,cmask,rax,ray,rac,kux,kuz,kvy,kvz,kwx,kwy,field);
+>> mex mit_diffuse_flux.F code/mit_diff_*.o
 
 % Offline implicit diffusive flux code.
->> mex mit_difimpl_flux.F code/mit_implicit_rmix.o code/solve_tridiagonal.o
 % widiff=mit_difimpl_flux(timestep,iterations,rac,dzf,dzc,cmask,diffkz,field);
+>> mex mit_difimpl_flux.F code/mit_implicit_rmix.o code/solve_tridiagonal.o
             
 % Routine to calculate vertically-integrated flux divergence. 
->> mex mit_calc_divergence.F 
 % [horz_div,vert_div]=mit_calc_divergence(dz,vol,kave,mask,uflux,vflux,wtflux);
+>> mex mit_calc_divergence.F 
 
 % Routine to integrate properties vertically. 
+% [integral_field]=mit_integrate_vert(dz,kave,mask,field);
 >> mex mit_integrate_vert.F
-%[integral_field]=mit_integrate_vert(dz,kave,mask,field);
