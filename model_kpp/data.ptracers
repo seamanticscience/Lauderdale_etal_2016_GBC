@@ -1,0 +1,72 @@
+ &PTRACERS_PARM01
+ PTRACERS_numInUse=6,
+ PTRACERS_Iter0=4248000,
+#
+# The following option is now obsolete!!!
+#   PTRACERS_write_mnc=.TRUE.,
+# For explicit evprn virtual flux, include
+# PTRACERS_evprn(n)=0., conc of tracer in rainwater
+# PTRACERS_ref(1,n)=nnn reference value, 2.007 dic, 2.314 alk, 0.0 others
+#
+# tracer 1 - dic
+ PTRACERS_names(1)='dic',
+ PTRACERS_long_names(1)='Dissolved Inorganic Carbon',
+ PTRACERS_units(1)='mol C/m^3',
+ PTRACERS_advScheme(1)=77,
+ PTRACERS_diffKh(1)=0.E3,
+ PTRACERS_diffKr(1)=5.E-5,
+ PTRACERS_useGMRedi(1)=.TRUE.,
+ PTRACERS_useKPP(1)=.TRUE.,
+ PTRACERS_initialFile(1)='dic.bin',
+# tracer 2 - alk
+ PTRACERS_names(2)='alk',
+ PTRACERS_long_names(2)='Alkalinity',
+ PTRACERS_units(2)='mol eq/m^3',
+ PTRACERS_advScheme(2)=77,
+ PTRACERS_diffKh(2)=0.E3,
+ PTRACERS_diffKr(2)=5.E-5,
+ PTRACERS_useGMRedi(2)=.TRUE.,
+ PTRACERS_useKPP(2)=.TRUE.,
+ PTRACERS_initialFile(2)='alk.bin',
+# tracer 3 - po4
+ PTRACERS_names(3)='po4',
+ PTRACERS_long_names(3)='Phosphate',
+ PTRACERS_units(3)='mol P/m^3',
+ PTRACERS_advScheme(3)=77,
+ PTRACERS_diffKh(3)=0.E3,
+ PTRACERS_diffKr(3)=5.E-5,
+ PTRACERS_useGMRedi(3)=.TRUE.,
+ PTRACERS_useKPP(3)=.TRUE.,
+ PTRACERS_initialFile(3)='po4.bin',
+# tracer 4 - dop
+ PTRACERS_names(4)='dop',
+ PTRACERS_long_names(4)='Dissolved Organic Phosphorus',
+ PTRACERS_units(4)='mol P/m^3',
+ PTRACERS_advScheme(4)=77,
+ PTRACERS_diffKh(4)=0.E3,
+ PTRACERS_diffKr(4)=5.E-5,
+ PTRACERS_useGMRedi(4)=.TRUE.,
+ PTRACERS_useKPP(4)=.TRUE.,
+ PTRACERS_initialFile(4)='dop.bin',
+# tracer 5 - o2
+ PTRACERS_names(5)='o2',
+ PTRACERS_long_names(5)='Dissolved Oxygen',
+ PTRACERS_units(5)='mol O/m^3',
+ PTRACERS_advScheme(5)=77,
+ PTRACERS_diffKh(5)=0.E3,
+ PTRACERS_diffKr(5)=5.E-5,
+ PTRACERS_useGMRedi(5)=.TRUE.,
+ PTRACERS_useKPP(5)=.TRUE.,
+ PTRACERS_initialFile(5)='do2.bin',
+# tracer 6 - Iron
+ PTRACERS_names(6)='fe',
+ PTRACERS_long_names(6)='Iron',
+ PTRACERS_units(6)='mol Fe/m^3',
+ PTRACERS_advScheme(6)=77,
+ PTRACERS_diffKh(6)=0.E3,
+ PTRACERS_diffKr(6)=5.E-5,
+ PTRACERS_useGMRedi(6)=.TRUE.,
+ PTRACERS_useKPP(6)=.TRUE.,
+ PTRACERS_initialFile(6)='fet_init_molm3.bin',
+ &
+

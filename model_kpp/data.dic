@@ -1,0 +1,48 @@
+# DIC parameters 
+ &ABIOTIC_PARMS
+# permil :: set carbon mol/m3 <---> mol/kg conversion factor
+# 		default permil = 1024.5 kg/m3
+# Pa2Atm :: Conversion factor for atmospheric pressure pLoad (when coupled 
+# 		to atmospheric model) into Atm. Default assumes pLoad in Pascal
+#		1 Atm = 1.01325e5 Pa = 1013.25 mb
+ &
+
+ &BIOTIC_PARMS
+# DOPfraction :: fraction of new production going to DOP
+# KDOPRemin   :: DOP remineralization rate (1/s) = 1/(6 month)
+# KRemin      :: remin power law coeff
+# zcrit       :: Minimum Depth (m) over which biological activity
+#		is computed --> determines nlev as the indice of the
+#		first layer deeper than -zcrit
+# O2crit      :: critical oxygen level (mol/m3)
+# R_OP, R_CP , R_NP, R_FeP :: stochiometric ratios
+# zca         :: scale depth for CaCO3 remineralization (m)
+#
+# Parameters for light/nutrient limited bioac
+# parfrac     :: fraction of Qsw that is PAR
+# k0          :: light attentuation coefficient (1/m)
+# lit0        :: half saturation light constant (W/m2)
+# KPO4        :: half saturation phosphate constant (mol/m3)
+# KFE         :: half saturation fe constant (mol/m3)
+#
+# Iron chemisty values
+# alpfe       :: solubility of aeolian fe
+# freefemax   :: max solubility of free iron (mol/m3)
+#
+# Control variables
+# KScav       :: iron scavenging rate 
+# ligand_stab :: ligand-free iron stability constant (m3/mol)
+# ligand_tot  :: total free ligand  (mol/m3)
+# alpha       :: timescale for biological activity read in alphaUniform and filled in 2d array alpha
+# alphaUniform=6. _d -3/(360. _d 0 * 86400. _d 0) Same as Dutkiewicz et al (2006)
+#  alphaUniform = 1.929012346.e-10,
+# rain_ratio  :: inorganic/organic carbon rain ratio read in rainRatioUniform and filled in 2d array rain_ratio
+ &
+
+ &DIC_FORCING
+  DIC_iceFile='fice.bin',
+  DIC_windFile='tren_speed.bin',
+  DIC_silicaFile='sillev1.bin',
+  DIC_ironFile='mah_somtimind_molfem2s.bin',
+  DIC_int1=3,
+ &
