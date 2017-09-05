@@ -12,7 +12,7 @@ The MEX files, which enable interaction between MATLAB and Fortran routines for 
 
 Any questions or comments, please get in contact!
 
-https://zenodo.org/badge/98926569.svg
+<a href="https://zenodo.org/badge/latestdoi/98926569"><img src="https://zenodo.org/badge/98926569.svg" alt="DOI"></a>
 
 # Installing MEX components
 % Check your mex installation and compiler
