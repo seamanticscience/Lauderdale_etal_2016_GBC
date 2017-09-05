@@ -12,6 +12,8 @@ The MEX files, which enable interaction between MATLAB and Fortran routines for 
 
 Any questions or comments, please get in contact!
 
+https://zenodo.org/badge/latestdoi/98926569
+
 # Installing MEX components
 % Check your mex installation and compiler
 >> mex -setup Fortran
