@@ -24,6 +24,8 @@ landmask=change(grid.hfacc(:,:,1)','>',0.999,5);
 landmask=change(landmask,'==',NaN,1);
 landmask=change(landmask,'==',5,NaN);
 
+plot_landmask='false'; b=[];
+
 % Reduce the advective terms by order of magnitude to plot on same scale
 fac=0.01;
 
@@ -33,57 +35,57 @@ h(1)=subplot(331);
 %[~,a(1)]=contourf(grid.lonc,grid.latc,nanmean(theta_adv_horz,3)'.*grid.hfacc(:,:,1)',-1e-4:1e-5:1e-4);canom;colormap(bluewhitered(20));caxis([-1e-4 1e-4]);
 [~,a(1)]=contourf(grid.lonc,grid.latc,nanmean(theta_adv_horz,3)'.*grid.hfacc(:,:,1)',[-5e-4,-5e-5:5e-6:5e-5,5e-4]);
 tmp=get(a(1),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(theta_adv_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(1)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-5); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(theta_adv_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(1)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-5); axestop; end
 title({'Horizontal Advection of T';'[K.m/s]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(2)=subplot(332);
 %[~,a(2)]=contourf(grid.lonc,grid.latc,nanmean(theta_adv_vert,3)'.*grid.hfacc(:,:,1)',-1e-4:1e-5:1e-4);canom;colormap(bluewhitered(20));caxis([-1e-4 1e-4]);
 [~,a(2)]=contourf(grid.lonc,grid.latc,nanmean(theta_adv_vert,3)'.*grid.hfacc(:,:,1)',[-5e-4,-5e-5:5e-6:5e-5,5e-4]);
 tmp=get(a(2),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(theta_adv_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(2)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-5); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(theta_adv_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(2)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-5); axestop; end
 title({'Vertical Advection of T';'[K.m/s]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(3)=subplot(333);
 [~,a(3)]=contourf(grid.lonc,grid.latc,nanmean((theta_adv_horz+theta_adv_vert),3)'.*grid.hfacc(:,:,1)',[-5e-4,-5e-5:5e-6:5e-5,5e-4]);
 tmp=get(a(3),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean((theta_adv_horz+theta_adv_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k');
-b(3)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-5); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean((theta_adv_horz+theta_adv_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end;
+if strcmpi(plot_landmask,'true'); b(3)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-5); axestop; end
 title({'Sum of Advection';'[K.m/s]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(4)=subplot(334);
 [~,a(4)]=contourf(grid.lonc,grid.latc,nanmean(theta_diff_horz,3)'.*grid.hfacc(:,:,1)',[-5e-4,-5e-5:5e-6:5e-5,5e-4]);
 tmp=get(a(4),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(theta_diff_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k');
-b(4)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-5); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(theta_diff_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end;
+if strcmpi(plot_landmask,'true'); b(4)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-5); axestop; end
 title({'Horizontal Diffusion of T';'[K.m/s]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(5)=subplot(335);
 [~,a(5)]=contourf(grid.lonc,grid.latc,nanmean(theta_diff_vert,3)'.*grid.hfacc(:,:,1)',[-5e-4,-5e-5:5e-6:5e-5,5e-4]);
 tmp=get(a(5),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(theta_diff_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k');
-b(5)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-5); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(theta_diff_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end;
+if strcmpi(plot_landmask,'true'); b(5)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-5); axestop; end
 title({'Vertical Diffusion of T';'[K.m/s]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(6)=subplot(336);
 [~,a(6)]=contourf(grid.lonc,grid.latc,nanmean((theta_diff_horz+theta_diff_vert),3)'.*grid.hfacc(:,:,1)',[-5e-4,-5e-5:5e-6:5e-5,5e-4]);
 tmp=get(a(6),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean((theta_diff_horz+theta_diff_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(6)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-5); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean((theta_diff_horz+theta_diff_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(6)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-5); axestop; end
 title({'Sum of Diffusion';'[K.m/s]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(7)=subplot(337);
 [~,a(7)]=contourf(grid.lonc,grid.latc,nanmean(theta_surf_flux,3)'.*grid.hfacc(:,:,1)',[-5e-4,-5e-5:5e-6:5e-5,5e-4]);
 tmp=get(a(7),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(theta_surf_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k');
-b(7)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-5); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(theta_surf_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end;
+if strcmpi(plot_landmask,'true'); b(7)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-5); axestop; end
 title({'Surface Flux of T';'[K.m/s]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(8)=subplot(338);
 [~,a(8)]=contourf(grid.lonc,grid.latc,nanmean(dthetadt,3)'.*grid.hfacc(:,:,1)',[-5e-4,-5e-5:5e-6:5e-5,5e-4]);
 tmp=get(a(8),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(dthetadt,3)'.*grid.hfacc(:,:,1)',[0 0],'k');
-b(8)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-5); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(dthetadt,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end;
+if strcmpi(plot_landmask,'true'); b(8)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-5); axestop; end
 title({'Tendency of T';'[K.m/s]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(9)=subplot(339);
 [~,a(9)]=contourf(grid.lonc,grid.latc,nanmean((theta_surf_flux+theta_adv_horz+theta_adv_vert+theta_diff_horz+theta_diff_vert),3)'.*grid.hfacc(:,:,1)',[-5e-4,-5e-5:5e-6:5e-5,5e-4]);
 tmp=get(a(9),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contourf(grid.lonc,grid.latc,nanmean((dthetadt+theta_surf_flux+theta_adv_horz+theta_adv_vert+theta_diff_horz+theta_diff_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k');
-b(9)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-5); axestop
+hold on; if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean((theta_surf_flux+theta_adv_horz+theta_adv_vert+theta_diff_horz+theta_diff_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end;
+if strcmpi(plot_landmask,'true'); b(9)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-5); axestop; end
 title({'Sum of T components';'[K.m/s]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 set([a;b],'LineStyle','none'); 
 set(h,'Xlim',[min(grid.long) max(grid.lonc)],'XTickLabelMode','manual','XTickMode','manual','XTick',[min(grid.lonc):120:max(grid.long)],'XTickLabel',[floor(min(grid.long)):120:ceil(max(grid.lonc))],'YLim',[min(grid.latc) max(grid.latc)],'YTick',[-80:40:80],'FontSize',12); 
@@ -96,57 +98,57 @@ h(1)=subplot(331);
 %[~,c(1)]=contourf(grid.lonc,grid.latc,nanmean(salt_adv_horz,3)'.*grid.hfacc(:,:,1)',-5e-4:5e-5:5e-4);canom;colormap(bluewhitered(20));caxis([-5e-4 5e-4]);
 [~,a(1)]=contourf(grid.lonc,grid.latc,nanmean(salt_adv_horz.*fac,3)'.*grid.hfacc(:,:,1)',[-5e-5,-5e-6:5e-7:5e-6,5e-5]);
 tmp=get(a(1),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(salt_adv_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(1)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-6); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(salt_adv_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(1)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-6); axestop; end
 title({['Horizontal Advection of S/',num2str(1/fac)];'[Psu.m/s]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(2)=subplot(332);
 %[~,c(2)]=contourf(grid.lonc,grid.latc,nanmean(salt_adv_vert,3)'.*grid.hfacc(:,:,1)',-5e-4:5e-5:5e-4);canom;colormap(bluewhitered(20));caxis([-5e-4 5e-4]);
 [~,a(2)]=contourf(grid.lonc,grid.latc,nanmean(salt_adv_vert.*fac,3)'.*grid.hfacc(:,:,1)',[-5e-5,-5e-6:5e-7:5e-6,5e-5]);
 tmp=get(a(2),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(salt_adv_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(2)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-6); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(salt_adv_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(2)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-6); axestop; end
 title({['Vertical Advection of S/',num2str(1/fac)];'[Psu.m/s]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(3)=subplot(333);
 [~,a(3)]=contourf(grid.lonc,grid.latc,nanmean((salt_adv_horz+salt_adv_vert),3)'.*grid.hfacc(:,:,1)',[-5e-5,-5e-6:5e-7:5e-6,5e-5]);
 tmp=get(a(3),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(salt_adv_horz+salt_adv_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(3)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-6); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(salt_adv_horz+salt_adv_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(3)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-6); axestop; end
 title({'Sum of Advection';'[Psu.m/s]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(4)=subplot(334);
 [~,a(4)]=contourf(grid.lonc,grid.latc,nanmean(salt_diff_horz,3)'.*grid.hfacc(:,:,1)',[-5e-5,-5e-6:5e-7:5e-6,5e-5]);
 tmp=get(a(4),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(salt_diff_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(4)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-6); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(salt_diff_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(4)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-6); axestop; end
 title({'Horizontal Diffusion of S';'[Psu.m/s]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(5)=subplot(335);
 [~,a(5)]=contourf(grid.lonc,grid.latc,nanmean(salt_diff_vert,3)'.*grid.hfacc(:,:,1)',[-5e-5,-5e-6:5e-7:5e-6,5e-5]);
 tmp=get(a(5),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(salt_diff_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(5)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-6); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(salt_diff_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(5)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-6); axestop; end
 title({'Vertical Diffusion of S';'[Psu.m/s]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(6)=subplot(336);
 [~,a(6)]=contourf(grid.lonc,grid.latc,nanmean((salt_diff_horz+salt_diff_vert),3)'.*grid.hfacc(:,:,1)',[-5e-5,-5e-6:5e-7:5e-6,5e-5]);
 tmp=get(a(6),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean((salt_diff_horz+salt_diff_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(6)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-6); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean((salt_diff_horz+salt_diff_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(6)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-6); axestop; end
 title({'Sum of Diffusion';'[Psu.m/s]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(7)=subplot(337);
 [~,a(7)]=contourf(grid.lonc,grid.latc,nanmean(salt_surf_flux,3)'.*grid.hfacc(:,:,1)',[-5e-5,-5e-6:5e-7:5e-6,5e-5]);
 tmp=get(a(7),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(salt_surf_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(7)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-6); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(salt_surf_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(7)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-6); axestop; end
 title({'Surface Flux of S';'[Psu.m/s]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(8)=subplot(338);
 [~,a(8)]=contourf(grid.lonc,grid.latc,nanmean(dsaltdt,3)'.*grid.hfacc(:,:,1)',[-5e-5,-5e-6:5e-7:5e-6,5e-5]);
 tmp=get(a(8),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(dsaltdt,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(8)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-6); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(dsaltdt,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(8)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-6); axestop; end
 title({'Tendency of S';'[Psu.m/s]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(9)=subplot(339);
-[~,a(9)]=contourf(grid.lonc,grid.latc,nanmean((dsaltdt+salt_surf_flux+salt_adv_horz+salt_adv_vert+salt_diff_horz+salt_diff_vert),3)'.*grid.hfacc(:,:,1)',[-5e-5,-5e-6:5e-7:5e-6,5e-5]);
+[~,a(9)]=contourf(grid.lonc,grid.latc,nanmean((salt_surf_flux+salt_adv_horz+salt_adv_vert+salt_diff_horz+salt_diff_vert),3)'.*grid.hfacc(:,:,1)',[-5e-5,-5e-6:5e-7:5e-6,5e-5]);
 tmp=get(a(9),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean((salt_surf_flux+salt_adv_horz+salt_adv_vert+salt_diff_horz+salt_diff_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(9)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-6); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean((salt_surf_flux+salt_adv_horz+salt_adv_vert+salt_diff_horz+salt_diff_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(9)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-6); axestop; end
 title({'Sum of S components';'[Psu.m/s]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 set([a;b],'LineStyle','none')
 set(h,'Xlim',[min(grid.long) max(grid.lonc)],'XTickLabelMode','manual','XTickMode','manual','XTick',[min(grid.lonc):120:max(grid.long)],'XTickLabel',[floor(min(grid.long)):120:ceil(max(grid.lonc))],'YLim',[min(grid.latc) max(grid.latc)],'YTick',[-80:40:80],'FontSize',12); 
@@ -159,57 +161,57 @@ h(1)=subplot(331);
 %[~,c(1)]=contourf(grid.lonc,grid.latc,nanmean(salt_adv_horz,3)'.*grid.hfacc(:,:,1)',-5e-4:5e-5:5e-4);canom;colormap(bluewhitered(20));caxis([-5e-4 5e-4]);
 [~,a(1)]=contourf(grid.lonc,grid.latc,nanmean(dic_adv_horz.*fac,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(1),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(dic_adv_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(1)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(dic_adv_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(1)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({['Horizontal Advection of DIC/',num2str(1/fac)];'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(2)=subplot(332);
 %[~,c(2)]=contourf(grid.lonc,grid.latc,nanmean(salt_adv_vert,3)'.*grid.hfacc(:,:,1)',-5e-4:5e-5:5e-4);canom;colormap(bluewhitered(20));caxis([-5e-4 5e-4]);
 [~,a(2)]=contourf(grid.lonc,grid.latc,nanmean(dic_adv_vert.*fac,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(2),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(dic_adv_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(2)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(dic_adv_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(2)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({['Vertical Advection of DIC/',num2str(1/fac)];'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(3)=subplot(333);
 [~,a(3)]=contourf(grid.lonc,grid.latc,nanmean((dic_adv_horz+dic_adv_vert),3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(3),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean((dic_adv_horz+dic_adv_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(3)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean((dic_adv_horz+dic_adv_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(3)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Sum of Advection';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(4)=subplot(334);
 [~,a(4)]=contourf(grid.lonc,grid.latc,nanmean(dic_diff_horz+dic_diff_vert,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(4),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(dic_diff_horz+dic_diff_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(4)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(dic_diff_horz+dic_diff_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(4)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Horizontal+Vertical Diffusion of DIC';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(5)=subplot(335);
 [~,a(5)]=contourf(grid.lonc,grid.latc,nanmean(dic_co2_flux,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(5),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(dic_co2_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(5)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(dic_co2_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(5)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Surface Flux of CO2';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(6)=subplot(336);
 [~,a(6)]=contourf(grid.lonc,grid.latc,nanmean((dic_carb_flux+dic_bio_flux),3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(6),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean((dic_carb_flux+dic_bio_flux),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(6)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean((dic_carb_flux+dic_bio_flux),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(6)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Net Biogenic Flux';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(7)=subplot(337);
 [~,a(7)]=contourf(grid.lonc,grid.latc,nanmean(dic_vrt_flux,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(7),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(dic_vrt_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(7)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(dic_vrt_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(7)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Surface Dilution of DIC';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(8)=subplot(338);
 [~,a(8)]=contourf(grid.lonc,grid.latc,nanmean(ddicdt,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(8),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(ddicdt,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(8)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(ddicdt,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(8)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Tendency of DIC';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(9)=subplot(339);
 [~,a(9)]=contourf(grid.lonc,grid.latc,nanmean((dic_vrt_flux+dic_co2_flux+dic_carb_flux+dic_bio_flux+dic_adv_horz+dic_adv_vert+dic_diff_horz+dic_diff_vert),3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(9),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean((dic_vrt_flux+dic_co2_flux+dic_carb_flux+dic_bio_flux+dic_adv_horz+dic_adv_vert+dic_diff_horz+dic_diff_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(9)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean((dic_vrt_flux+dic_co2_flux+dic_carb_flux+dic_bio_flux+dic_adv_horz+dic_adv_vert+dic_diff_horz+dic_diff_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(9)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Sum of DIC components';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 set([a;b],'LineStyle','none')
 set(h,'Xlim',[min(grid.long) max(grid.lonc)],'XTickLabelMode','manual','XTickMode','manual','XTick',[min(grid.lonc):120:max(grid.long)],'XTickLabel',[floor(min(grid.long)):120:ceil(max(grid.lonc))],'YLim',[min(grid.latc) max(grid.latc)],'YTick',[-80:40:80],'FontSize',12); 
@@ -222,120 +224,120 @@ h(1)=subplot(331);
 %[~,c(1)]=contourf(grid.lonc,grid.latc,nanmean(salt_adv_horz,3)'.*grid.hfacc(:,:,1)',-5e-4:5e-5:5e-4);canom;colormap(bluewhitered(20));caxis([-5e-4 5e-4]);
 [~,a(1)]=contourf(grid.lonc,grid.latc,nanmean(alk_adv_horz.*fac,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(1),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(alk_adv_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(1)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(alk_adv_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(1)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({['Horizontal Advection of ALK/',num2str(1/fac)];'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(2)=subplot(332);
 %[~,c(2)]=contourf(grid.lonc,grid.latc,nanmean(salt_adv_vert,3)'.*grid.hfacc(:,:,1)',-5e-4:5e-5:5e-4);canom;colormap(bluewhitered(20));caxis([-5e-4 5e-4]);
 [~,a(2)]=contourf(grid.lonc,grid.latc,nanmean(alk_adv_vert.*fac,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(2),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(alk_adv_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(2)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(alk_adv_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(2)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({['Vertical Advection of ALK/',num2str(1/fac)];'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(3)=subplot(333);
 [~,a(3)]=contourf(grid.lonc,grid.latc,nanmean((alk_adv_horz+alk_adv_vert),3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(3),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean((alk_adv_horz+alk_adv_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(3)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean((alk_adv_horz+alk_adv_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(3)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Sum of Advection';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(4)=subplot(334);
 [~,a(4)]=contourf(grid.lonc,grid.latc,nanmean(alk_diff_horz,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(4),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(alk_diff_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(4)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(alk_diff_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(4)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Horizontal Diffusion of ALK';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(5)=subplot(335);
 [~,a(5)]=contourf(grid.lonc,grid.latc,nanmean(alk_diff_vert,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(5),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(alk_diff_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(5)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(alk_diff_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(5)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Vertical Diffusion of ALK';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(6)=subplot(336);
 [~,a(6)]=contourf(grid.lonc,grid.latc,nanmean((alk_bio_flux+alk_carb_flux),3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(6),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean((alk_bio_flux+alk_carb_flux),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(6)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean((alk_bio_flux+alk_carb_flux),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(6)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Biological+Carbonate Flux';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(7)=subplot(337);
 [~,a(7)]=contourf(grid.lonc,grid.latc,nanmean(alk_vrt_flux,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(7),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(alk_vrt_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(7)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(alk_vrt_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(7)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Surface Dilution of ALK';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(8)=subplot(338);
 [~,a(8)]=contourf(grid.lonc,grid.latc,nanmean(dalkdt,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(8),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(dalkdt,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(8)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(dalkdt,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(8)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Tendency of ALK';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(9)=subplot(339);
 [~,a(9)]=contourf(grid.lonc,grid.latc,nanmean((alk_vrt_flux+alk_carb_flux+alk_bio_flux+alk_adv_horz+alk_adv_vert+alk_diff_horz+alk_diff_vert),3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(9),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean((alk_vrt_flux+alk_carb_flux+alk_bio_flux+alk_adv_horz+alk_adv_vert+alk_diff_horz+alk_diff_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(9)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean((alk_vrt_flux+alk_carb_flux+alk_bio_flux+alk_adv_horz+alk_adv_vert+alk_diff_horz+alk_diff_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(9)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Sum of ALK components';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 set([a;b],'LineStyle','none')
 set(h,'Xlim',[min(grid.long) max(grid.lonc)],'XTickLabelMode','manual','XTickMode','manual','XTick',[min(grid.lonc):120:max(grid.long)],'XTickLabel',[floor(min(grid.long)):120:ceil(max(grid.lonc))],'YLim',[min(grid.latc) max(grid.latc)],'YTick',[-80:40:80],'FontSize',12); 
 orient landscape
 eval(['print -dpsc ',obsid,'_budget_alk.ps'])
 
-% Phosphate Budget
+%% Phosphate Budget
 figure
 h(1)=subplot(331);
 %[~,c(1)]=contourf(grid.lonc,grid.latc,nanmean(salt_adv_horz,3)'.*grid.hfacc(:,:,1)',-5e-4:5e-5:5e-4);canom;colormap(bluewhitered(20));caxis([-5e-4 5e-4]);
 [~,a(1)]=contourf(grid.lonc,grid.latc,nanmean(po4_adv_horz,3)'.*grid.hfacc(:,:,1)',[-2e-8,-2e-9:2e-10:2e-9,2e-8]);
 tmp=get(a(1),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(po4_adv_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(1)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(po4_adv_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(1)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Horizontal Advection of PO4';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(2)=subplot(332);
 %[~,c(2)]=contourf(grid.lonc,grid.latc,nanmean(salt_adv_vert,3)'.*grid.hfacc(:,:,1)',-5e-4:5e-5:5e-4);canom;colormap(bluewhitered(20));caxis([-5e-4 5e-4]);
 [~,a(2)]=contourf(grid.lonc,grid.latc,nanmean(po4_adv_vert,3)'.*grid.hfacc(:,:,1)',[-2e-8,-2e-9:2e-10:2e-9,2e-8]);
 tmp=get(a(2),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(po4_adv_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(2)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(po4_adv_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(2)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Vertical Advection of PO4';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(3)=subplot(333);
 [~,a(3)]=contourf(grid.lonc,grid.latc,nanmean((po4_adv_horz+po4_adv_vert),3)'.*grid.hfacc(:,:,1)',[-2e-8,-2e-9:2e-10:2e-9,2e-8]);
 tmp=get(a(3),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean((po4_adv_horz+po4_adv_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(3)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean((po4_adv_horz+po4_adv_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(3)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Sum of Advection';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(4)=subplot(334);
 [~,a(4)]=contourf(grid.lonc,grid.latc,nanmean(po4_diff_horz,3)'.*grid.hfacc(:,:,1)',[-2e-8,-2e-9:2e-10:2e-9,2e-8]);
 tmp=get(a(4),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(po4_diff_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(4)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(po4_diff_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(4)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Horizontal Diffusion of PO4';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(5)=subplot(335);
 [~,a(5)]=contourf(grid.lonc,grid.latc,nanmean(po4_diff_vert,3)'.*grid.hfacc(:,:,1)',[-2e-8,-2e-9:2e-10:2e-9,2e-8]);
 tmp=get(a(5),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(po4_diff_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(5)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(po4_diff_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(5)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Vertical Diffusion of PO4';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(6)=subplot(336);
 [~,a(6)]=contourf(grid.lonc,grid.latc,nanmean((po4_diff_horz+po4_diff_vert),3)'.*grid.hfacc(:,:,1)',[-2e-8,-2e-9:2e-10:2e-9,2e-8]);
 tmp=get(a(6),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean((po4_diff_horz+po4_diff_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(6)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean((po4_diff_horz+po4_diff_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(6)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Sum of Diffusion';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(7)=subplot(337);
 [~,a(7)]=contourf(grid.lonc,grid.latc,nanmean(po4_bio_flux,3)'.*grid.hfacc(:,:,1)',[-2e-8,-2e-9:2e-10:2e-9,2e-8]);
 tmp=get(a(7),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(po4_bio_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(7)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(po4_bio_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(7)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Biological Flux';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(8)=subplot(338);
 [~,a(8)]=contourf(grid.lonc,grid.latc,nanmean(dpo4dt,3)'.*grid.hfacc(:,:,1)',[-2e-8,-2e-9:2e-10:2e-9,2e-8]);
 tmp=get(a(8),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(dalkdt,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(8)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(dpo4dt,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(8)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Tendency of PO4';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(9)=subplot(339);
 [~,a(9)]=contourf(grid.lonc,grid.latc,nanmean((po4_bio_flux+po4_adv_horz+po4_adv_vert+po4_diff_horz+po4_diff_vert),3)'.*grid.hfacc(:,:,1)',[-2e-8,-2e-9:2e-10:2e-9,2e-8]);
 tmp=get(a(9),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean((po4_bio_flux+po4_adv_horz+po4_adv_vert+po4_diff_horz+po4_diff_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(9)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean((po4_bio_flux+po4_adv_horz+po4_adv_vert+po4_diff_horz+po4_diff_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(9)=jpcolor(grid.lonc,grid.latc,landmask.*-5e-7); axestop; end
 title({'Sum of PO4 components';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 set([a;b],'LineStyle','none')
 set(h,'Xlim',[min(grid.long) max(grid.lonc)],'XTickLabelMode','manual','XTickMode','manual','XTick',[min(grid.lonc):120:max(grid.long)],'XTickLabel',[floor(min(grid.long)):120:ceil(max(grid.lonc))],'YLim',[min(grid.latc) max(grid.latc)],'YTick',[-80:40:80],'FontSize',12); 
@@ -344,7 +346,15 @@ eval(['print -dpsc ',obsid,'_budget_po4.ps'])
 clear a b h
 
 % Bio production
-biop=-(po4_adv_horz+po4_adv_vert+po4_diff_vert+po4_diff_horz);
+% if isempty(strfind(obsid,'ecco2darwin'));
+%     biop=-(po4_adv_horz+po4_adv_vert+po4_diff_vert+po4_diff_horz);
+% else
+    % Add two important time varying terms
+if exist('dpo4dt','var') 
+    biop=-(po4_adv_horz+po4_adv_vert+po4_diff_vert+po4_diff_horz-dpo4dt);
+else
+    biop=-(po4_adv_horz+po4_adv_vert+po4_diff_vert+po4_diff_horz);
+end
 
 %% These decompositions are in the spirit of the original proposal, which neglected mixing
 ugradtheta=-(theta_diff_horz+theta_diff_vert+theta_surf_flux);
@@ -401,6 +411,12 @@ diffcres=cres_diff_horz+cres_diff_vert; %(dic_diff_horz+dic_diff_vert)-diffcsat;
 csat_surface_fluxes=-(theta_surf_flux.*ddicdth)-(salt_surf_flux.*ddicds)-(alk_vrt_flux.*ddicdalk); % Assuming preformed alkalinity here.
 cres_surface_fluxes=(dic_adv_horz+dic_adv_vert+dic_diff_horz+dic_diff_vert)-csat_surface_fluxes;
 
+%% Tendency of DIC is accounted for in the error in CRES, so subtract it
+if exist('ddicdt','var')
+    cres_adv_vert=cres_adv_vert-ddicdt;
+    cres_surface_fluxes=cres_surface_fluxes-ddicdt;
+end
+
 %% Adjust the disequilibrium for outgassing of riverine DIC
  if strcmpi(obsid(1:4),'clim')
      tmp=grid.hfacc(:,:,1);
@@ -434,43 +450,45 @@ flux_co2_adv_diff=advcsat+advcres+diffcsat+diffcres... % substituted for dic_adv
 flux_surface_fluxes=csat_surface_fluxes+cres_surface_fluxes...
     +(Rcp.*biop)+(Rcaco3.*Rcp.*biop)+dic_vrt_flux;
 
+b=[];
+
 %% Plot the total components compared to reference co2 fluxes
 figure
 h(1)=subplot(231);
 [~,a(1)]=contourf(grid.lonc,grid.latc,nanmean(dic_co2_flux,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(1),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(dic_co2_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(1)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(dic_co2_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(1)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'Reference CO2 fluxes';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(2)=subplot(232);
 [~,a(2)]=contourf(grid.lonc,grid.latc,-nanmean(flux_co2_budget,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(2),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,-nanmean(flux_co2_budget,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(2)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on; if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,-nanmean(flux_co2_budget,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(2)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 fluxes from';'DIC budget [mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(3)=subplot(233);
 [~,a(3)]=contourf(grid.lonc,grid.latc,-nanmean(flux_co2_ugradcsat,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(3),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,-nanmean(flux_co2_ugradcsat,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(3)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on; if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,-nanmean(flux_co2_ugradcsat,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(3)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 fluxes from';'ugradcsat [mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(4)=subplot(234);
 [~,a(4)]=contourf(grid.lonc,grid.latc,-nanmean(flux_co2_gradkgradcsat,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(4),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,-nanmean(flux_co2_gradkgradcsat,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(4)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on; if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,-nanmean(flux_co2_gradkgradcsat,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(4)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 fluxes from';'gradkgradcsat [mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(5)=subplot(235);
 [~,a(5)]=contourf(grid.lonc,grid.latc,-nanmean(flux_co2_adv_diff,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(5),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,-nanmean(flux_co2_adv_diff,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(5)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on; if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,-nanmean(flux_co2_adv_diff,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(5)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 fluxes from';'adv and diff csat [mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(6)=subplot(236);
 [~,a(6)]=contourf(grid.lonc,grid.latc,-nanmean(flux_surface_fluxes,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(6),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,-nanmean(flux_surface_fluxes,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(6)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on; if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,-nanmean(flux_surface_fluxes,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(6)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 fluxes from';'surface fluxes [mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 set([a;b],'LineStyle','none')
 set(h,'Xlim',[min(grid.long) max(grid.lonc)],'XTickLabelMode','manual','XTickMode','manual','XTick',[min(grid.lonc):120:max(grid.long)],'XTickLabel',[floor(min(grid.long)):120:ceil(max(grid.lonc))],'YLim',[min(grid.latc) max(grid.latc)],'YTick',[-80:40:80],'FontSize',12); 
@@ -481,11 +499,11 @@ eval(['print -dpsc ',obsid,'_co2_flux_components.ps'])
 figure
 ploth(1)=plot(grid.latc,squeeze(nansum(nanmean(dic_co2_flux,3).*grid.hfacc(:,:,1).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),'k','LineWidth',2);
 hold on
-ploth(2)=plot(grid.latc,squeeze(nansum(nanmean(-flux_co2_budget,3).*grid.hfacc(:,:,1).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),'g--','LineWidth',1);
-ploth(3)=plot(grid.latc,squeeze(nansum(nanmean(-flux_co2_ugradcsat,3).*grid.hfacc(:,:,1).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),'r','LineWidth',2);
-ploth(4)=plot(grid.latc,squeeze(nansum(nanmean(-flux_co2_gradkgradcsat,3).*grid.hfacc(:,:,1).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),'r--','LineWidth',1);
-ploth(5)=plot(grid.latc,squeeze(nansum(nanmean(-flux_co2_adv_diff,3).*grid.hfacc(:,:,1).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),'b','LineWidth',2);
-ploth(6)=plot(grid.latc,squeeze(nansum(nanmean(-flux_surface_fluxes,3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),'g','LineWidth',2);
+ploth(2)=plot(grid.latc,smooth(squeeze(nansum(nanmean(-flux_co2_budget,3).*grid.hfacc(:,:,1).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),11,'rlowess'),'g--','LineWidth',1);
+ploth(3)=plot(grid.latc,smooth(squeeze(nansum(nanmean(-flux_co2_ugradcsat,3).*grid.hfacc(:,:,1).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),11,'rlowess'),'r','LineWidth',2);
+ploth(4)=plot(grid.latc,smooth(squeeze(nansum(nanmean(-flux_co2_gradkgradcsat,3).*grid.hfacc(:,:,1).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),11,'rlowess'),'r--','LineWidth',1);
+ploth(5)=plot(grid.latc,smooth(squeeze(nansum(nanmean(-flux_co2_adv_diff,3).*grid.hfacc(:,:,1).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),11,'rlowess'),'b','LineWidth',2);
+ploth(6)=plot(grid.latc,smooth(squeeze(nansum(nanmean(-flux_surface_fluxes,3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),11,'rlowess'),'g','LineWidth',2);
 plot([-80 80],[0 0],'k--')
 set(gca,'XLim',[-80 80],'YLim',[-1e-7 1e-7],'FontSize',12)
 xlabel('Latitude','FontSize',12)
@@ -581,18 +599,18 @@ fixpslinestyle([obsid,'_zonalave_co2_flux_components.ps'])
 figure
 ploth(1)=plot(grid.latc,squeeze(nansum(nanmean(dic_co2_flux,3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),'k','LineWidth',1);
 hold on
-ploth(2)=plot(grid.latc,squeeze(nansum(nanmean(-flux_surface_fluxes,3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),'k','LineWidth',2);
-ploth(3)=plot(grid.latc,squeeze(nansum(nanmean(theta_surf_flux.*ddicdth,3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),'r','LineWidth',2);
-ploth(4)=plot(grid.latc,squeeze(nansum(nanmean(salt_surf_flux.*ddicds,3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),'b','LineWidth',2);
-ploth(5)=plot(grid.latc,squeeze(nansum(nanmean(alk_vrt_flux.*ddicdalk,3).*grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)./nansum(grid.dxc(:,:,1),1)),'g:','LineWidth',1);
-ploth(6)=plot(grid.latc,squeeze(nansum(nanmean(-(Rcp.*biop),3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),'m-.','LineWidth',1);
-ploth(7)=plot(grid.latc,squeeze(nansum(nanmean(-Rcaco3.*Rcp.*biop+(Rnp.*biop),3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),'m:','LineWidth',1);
-ploth(8)=plot(grid.latc,squeeze(nansum(nanmean(-dic_vrt_flux,3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),'g--','LineWidth',1);
-ploth(9)=plot(grid.latc,squeeze(nansum(nanmean(-cres_surface_fluxes,3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),'m--','LineWidth',1);
-ploth(10)=plot(grid.latc,squeeze(nansum(nanmean(-cres_surface_fluxes-(Rcp.*biop)-Rcaco3.*Rcp.*biop+(Rnp.*biop),3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),'m','LineWidth',2);
-ploth(11)=plot(grid.latc,squeeze(nansum(nanmean(salt_surf_flux.*ddicds+alk_vrt_flux.*ddicdalk-dic_vrt_flux,3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),'g','LineWidth',2);
+ploth(2)=plot(grid.latc,smooth(squeeze(nansum(nanmean(-flux_surface_fluxes,3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),11,'rlowess'),'k','LineWidth',2);
+ploth(3)=plot(grid.latc,smooth(squeeze(nansum(nanmean(theta_surf_flux.*ddicdth,3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),11,'rlowess'),'r','LineWidth',2);
+ploth(4)=plot(grid.latc,smooth(squeeze(nansum(nanmean(salt_surf_flux.*ddicds,3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),11,'rlowess'),'b','LineWidth',2);
+ploth(5)=plot(grid.latc,smooth(squeeze(nansum(nanmean(alk_vrt_flux.*ddicdalk,3).*grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)./nansum(grid.dxc(:,:,1),1)),11,'rlowess'),'g:','LineWidth',1);
+ploth(6)=plot(grid.latc,smooth(squeeze(nansum(nanmean(-(Rcp.*biop),3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),11,'rlowess'),'m-.','LineWidth',1);
+ploth(7)=plot(grid.latc,smooth(squeeze(nansum(nanmean(-Rcaco3.*Rcp.*biop+(Rnp.*biop),3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),11,'rlowess'),'m:','LineWidth',1);
+ploth(8)=plot(grid.latc,smooth(squeeze(nansum(nanmean(-dic_vrt_flux,3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),11,'rlowess'),'g--','LineWidth',1);
+ploth(9)=plot(grid.latc,smooth(squeeze(nansum(nanmean(-cres_surface_fluxes,3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),11,'rlowess'),'m--','LineWidth',1);
+ploth(10)=plot(grid.latc,smooth(squeeze(nansum(nanmean(-cres_surface_fluxes-(Rcp.*biop)-Rcaco3.*Rcp.*biop+(Rnp.*biop),3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),11,'rlowess'),'m','LineWidth',2);
+ploth(11)=plot(grid.latc,smooth(squeeze(nansum(nanmean(salt_surf_flux.*ddicds+alk_vrt_flux.*ddicdalk-dic_vrt_flux,3).*grid.dxc(:,:,1),1)./nansum(grid.dxc(:,:,1).*grid.hfacc(:,:,1),1)),11,'rlowess'),'g','LineWidth',2);
 plot([-80 80],[0 0],'k--')
-set(gca,'XLim',[-80 80],'YLim',[-1.5e-7 1.5e-7],'FontSize',12)
+set(gca,'XLim',[-80 80],'YLim',[-2e-7 2e-7],'FontSize',12)
 xlabel('Latitude','FontSize',12)
 ylabel('Weighted zonal average CO2 Flux (mol.m-2.s-1)','FontSize',12)
 title('Components of the surface flux CO2 balance','FontSize',12)
@@ -609,55 +627,55 @@ fixpslinestyle([obsid,'_zonal_surface_flux_components.ps'])
 % h(1)=subplot(331);
 % [~,a(1)]=contourf(grid.lonc,grid.latc,nanmean(-ugradtheta.*ddicdth,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 % tmp=get(a(1),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-% hold on; contour(grid.lonc,grid.latc,nanmean(-ugradtheta.*ddicdth,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
+% hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-ugradtheta.*ddicdth,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
 % b(1)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 % title({'CO2 Flux due to Csat T';'Transport [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 % h(2)=subplot(332);
 % [~,a(2)]=contourf(grid.lonc,grid.latc,nanmean(-ugradsalt.*ddicds,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 % tmp=get(a(2),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-% hold on; contour(grid.lonc,grid.latc,nanmean(-ugradsalt.*ddicds,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
+% hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-ugradsalt.*ddicds,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
 % b(2)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 % title({'CO2 Flux due to Csat S';'Transport [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 % h(3)=subplot(333);
 % [~,a(3)]=contourf(grid.lonc,grid.latc,nanmean(-ugradalk.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 % tmp=get(a(3),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-% hold on; contour(grid.lonc,grid.latc,nanmean(-ugradalk.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
+% hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-ugradalk.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
 % b(3)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 % title({'CO2 Flux due to Csat A';'Transport [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 % h(4)=subplot(334);
 % [~,a(4)]=contourf(grid.lonc,grid.latc,nanmean(-ugradcres,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 % tmp=get(a(4),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-% hold on; contour(grid.lonc,grid.latc,nanmean(-ugradcres,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
+% hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-ugradcres,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
 % b(4)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 % title({'CO2 Flux due to Cres';'Transport [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 % h(5)=subplot(335);
 % [~,a(5)]=contourf(grid.lonc,grid.latc,nanmean(-((Rcp.*biop)+(Rcaco3.*Rcp.*biop)),3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 % tmp=get(a(5),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-% hold on; contour(grid.lonc,grid.latc,nanmean(-((Rcp.*biop)+(Rcaco3.*Rcp.*biop)),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
+% hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-((Rcp.*biop)+(Rcaco3.*Rcp.*biop)),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
 % b(5)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 % title({'CO2 Flux due to PP and';'Carbonate [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 % h(6)=subplot(336);
 % [~,a(6)]=contourf(grid.lonc,grid.latc,nanmean(-(dic_diff_vert+dic_diff_horz),3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 % tmp=get(a(6),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-% hold on; contour(grid.lonc,grid.latc,nanmean(-(dic_diff_vert+dic_diff_horz),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
+% hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-(dic_diff_vert+dic_diff_horz),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
 % b(6)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 % title({'CO2 Flux due to DIC';'Diffusion [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 % h(7)=subplot(337);
 % [~,a(7)]=contourf(grid.lonc,grid.latc,nanmean(-dic_vrt_flux,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 % tmp=get(a(7),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-% hold on; contour(grid.lonc,grid.latc,nanmean(-dic_vrt_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
+% hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-dic_vrt_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
 % b(7)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 % title({'Surface Dilution of DIC';'[mol.m-2.s-1]'},'FontSize',12);xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 % h(8)=subplot(338);
 % [~,a(8)]=contourf(grid.lonc,grid.latc,nanmean(-ugradsalt.*ddicds-ugradalk.*ddicdalk-dic_vrt_flux,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 % tmp=get(a(8),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-% hold on; contour(grid.lonc,grid.latc,nanmean(-ugradsalt.*ddicds-ugradalk.*ddicdalk-dic_vrt_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
+% hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-ugradsalt.*ddicds-ugradalk.*ddicdalk-dic_vrt_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
 % b(8)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 % title({'CO2 Fluxes due to sum of';'FW Components [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 % h(9)=subplot(339);
 % [~,a(9)]=contourf(grid.lonc,grid.latc,nanmean(-flux_co2_ugradcsat,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 % tmp=get(a(9),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-% hold on; contour(grid.lonc,grid.latc,nanmean(-flux_co2_ugradcsat,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
+% hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-flux_co2_ugradcsat,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
 % b(9)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 % title({'CO2 Fluxes due to';'Components [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 % set([a;b],'LineStyle','none')
@@ -670,37 +688,37 @@ fixpslinestyle([obsid,'_zonal_surface_flux_components.ps'])
 % h(1)=subplot(321);
 % [~,a(1)]=contourf(grid.lonc,grid.latc,nanmean(-advcres,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 % tmp=get(a(1),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-% hold on; contour(grid.lonc,grid.latc,nanmean(-advcres,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
+% hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-advcres,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
 % b(1)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 % title({'CO2 Flux due to Cres';'Total Advection [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 % h(2)=subplot(322);
 % [~,a(2)]=contourf(grid.lonc,grid.latc,nanmean(-diffcres,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 % tmp=get(a(2),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-% hold on; contour(grid.lonc,grid.latc,nanmean(-diffcres,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
+% hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-diffcres,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
 % b(2)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 % title({'CO2 Flux due to Cres';'Total Diffusion [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 % h(3)=subplot(323);
 % [~,a(3)]=contourf(grid.lonc,grid.latc,nanmean(-cres_adv_horz,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 % tmp=get(a(3),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-% hold on; contour(grid.lonc,grid.latc,nanmean(cres_adv_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
+% hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(cres_adv_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
 % b(3)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 % title({'CO2 Flux due to Cres';'Horizontal Advection [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 % h(4)=subplot(324);
 % [~,a(4)]=contourf(grid.lonc,grid.latc,nanmean(-cres_diff_horz,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 % tmp=get(a(4),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-% hold on; contour(grid.lonc,grid.latc,nanmean(-cres_diff_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
+% hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-cres_diff_horz,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
 % b(4)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 % title({'CO2 Flux due to Cres';'Horizontal Diffusion [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 % h(5)=subplot(325);
 % [~,a(5)]=contourf(grid.lonc,grid.latc,nanmean(-cres_adv_vert,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 % tmp=get(a(5),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-% hold on; contour(grid.lonc,grid.latc,nanmean(-cres_adv_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
+% hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-cres_adv_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
 % b(5)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 % title({'CO2 Flux due to Cres';'Vertical Advection [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 % h(6)=subplot(326);
 % [~,a(6)]=contourf(grid.lonc,grid.latc,nanmean(-cres_diff_vert,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 % tmp=get(a(6),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-% hold on; contour(grid.lonc,grid.latc,nanmean(-cres_diff_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
+% hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-cres_diff_vert,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
 % b(6)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 % title({'CO2 Flux due to Cres';'Vertical Diffusion [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 % set([a;b],'LineStyle','none')
@@ -713,56 +731,56 @@ figure
 h(1)=subplot(331);
 [~,a(1)]=contourf(grid.lonc,grid.latc,nanmean(theta_surf_flux.*ddicdth,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(1),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(theta_surf_flux.*ddicdth,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(1)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(theta_surf_flux.*ddicdth,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(1)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Flux due to Csat';'Heat flux [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(2)=subplot(332);
 [~,a(2)]=contourf(grid.lonc,grid.latc,nanmean(salt_surf_flux.*ddicds,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(2),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(salt_surf_flux.*ddicds,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(2)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(salt_surf_flux.*ddicds,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(2)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Flux due to Csat';'Salt flux [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(3)=subplot(333);
 [~,a(3)]=contourf(grid.lonc,grid.latc,nanmean(alk_vrt_flux.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(3),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(alk_vrt_flux.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(3)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(alk_vrt_flux.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(3)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Flux due to Csat';'Alk flux [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(4)=subplot(334);
 [~,a(4)]=contourf(grid.lonc,grid.latc,nanmean(-dic_vrt_flux,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(4),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(-dic_vrt_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(4)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-dic_vrt_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(4)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Flux due to DIC';'Dilution [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(5)=subplot(335);
 [~,a(5)]=contourf(grid.lonc,grid.latc,nanmean(-cres_surface_fluxes,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(5),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(-cres_surface_fluxes,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(5)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-cres_surface_fluxes,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(5)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Flux due to Cres';'Advection/Diffusion [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(6)=subplot(336);
 [~,a(6)]=contourf(grid.lonc,grid.latc,nanmean(-Rcp.*biop-Rcaco3.*Rcp.*biop,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(6),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(-Rcp.*biop-Rcaco3.*Rcp.*biop,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(6)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-Rcp.*biop-Rcaco3.*Rcp.*biop,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(6)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Flux due to Net Biological';'Activity [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(7)=subplot(337);
 [~,a(7)]=contourf(grid.lonc,grid.latc,nanmean(-cres_surface_fluxes-Rcp.*biop-Rcaco3.*Rcp.*biop,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(7),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(-cres_surface_fluxes-Rcp.*biop-Rcaco3.*Rcp.*biop,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(7)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-cres_surface_fluxes-Rcp.*biop-Rcaco3.*Rcp.*biop,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(7)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Flux due to';'Cres+Bio [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(8)=subplot(338);
 [~,a(8)]=contourf(grid.lonc,grid.latc,nanmean(salt_surf_flux.*ddicds+alk_vrt_flux.*ddicdalk-dic_vrt_flux,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(8),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(salt_surf_flux.*ddicds+alk_vrt_flux.*ddicdalk-dic_vrt_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(8)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(salt_surf_flux.*ddicds+alk_vrt_flux.*ddicdalk-dic_vrt_flux,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(8)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Fluxes due to sum of';'FW Components [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(9)=subplot(339);
 [~,a(9)]=contourf(grid.lonc,grid.latc,nanmean(-flux_surface_fluxes,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(9),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(-flux_surface_fluxes,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(9)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-flux_surface_fluxes,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(9)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Fluxes due to sum of';'All Components [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 set([a;b],'LineStyle','none')
 set(h,'Xlim',[min(grid.long) max(grid.lonc)],'XTickLabelMode','manual','XTickMode','manual','XTick',[min(grid.lonc):120:max(grid.long)],'XTickLabel',[floor(min(grid.long)):120:ceil(max(grid.lonc))],'YLim',[min(grid.latc) max(grid.latc)],'YTick',[-80:40:80],'FontSize',12); 
@@ -785,56 +803,56 @@ eval(['print -dpsc ',obsid,'_flux_surface_fluxes.ps'])
 %     h(1)=subplot(331);
 %     [~,a(1)]=contourf(grid.lonc,grid.latc,nanmean(theta_surf_flux.*ddicdth,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 %     tmp=get(a(1),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-%     hold on; contour(grid.lonc,grid.latc,nanmean(theta_surf_flux.*ddicdth,3)'.*grid.hfacc(:,:,1)',[0 0],'k');
+%     hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(theta_surf_flux.*ddicdth,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end;
 %     b(1)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 %     title({'CO2 Flux due to Csat';'Heat flux [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 %     h(2)=subplot(332);
 %     [~,a(2)]=contourf(grid.lonc,grid.latc,nanmean(salt_surf_flux.*ddicds,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 %     tmp=get(a(2),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-%     hold on; contour(grid.lonc,grid.latc,nanmean(salt_surf_flux.*ddicds,3)'.*grid.hfacc(:,:,1)',[0 0],'k');
+%     hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(salt_surf_flux.*ddicds,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end;
 %     b(2)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 %     title({'CO2 Flux due to Csat';'Salt flux [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 %     h(3)=subplot(333);
 %     [~,a(3)]=contourf(grid.lonc,grid.latc,nanmean(alk_vrt_flux.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 %     tmp=get(a(3),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-%     hold on; contour(grid.lonc,grid.latc,nanmean(alk_vrt_flux.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[0 0],'k');
-% %    hold on; contour(grid.lonc,grid.latc,nanmean((alk_vrt_flux-Rnp.*biop+Rcaco3.*Rcp.*biop).*ddicdalk,3)'.*grid.hfacc(:,:,1)',[0 0],'k');
+%     hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(alk_vrt_flux.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end;
+% %    hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean((alk_vrt_flux-Rnp.*biop+Rcaco3.*Rcp.*biop).*ddicdalk,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end;
 %     b(3)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 %     title({'CO2 Flux due to Csat';'Alk flux [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 %     h(4)=subplot(334);
 %     [~,a(4)]=contourf(grid.lonc,grid.latc,nanmean(tforc_surf_flux.*ddicdth,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 %     tmp=get(a(4),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-%     hold on; contour(grid.lonc,grid.latc,nanmean(tforc_surf_flux.*ddicdth,3)'.*grid.hfacc(:,:,1)',[0 0],'k');
+%     hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(tforc_surf_flux.*ddicdth,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end;
 %     b(4)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 %     title({'CO2 Flux due to Csat';'Heat Forcing [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 %     h(5)=subplot(335);
 %     [~,a(5)]=contourf(grid.lonc,grid.latc,nanmean(sforc_surf_flux.*ddicds,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 %     tmp=get(a(5),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-%     hold on; contour(grid.lonc,grid.latc,nanmean(sforc_surf_flux.*ddicds,3)'.*grid.hfacc(:,:,1)',[0 0],'k');
+%     hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(sforc_surf_flux.*ddicds,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end;
 %     b(5)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 %     title({'CO2 Flux due to Csat';'Salt Forcing [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 %     h(6)=subplot(336);
 %     [~,a(6)]=contourf(grid.lonc,grid.latc,nanmean(alk_vrtforc_flux.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 %     tmp=get(a(6),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-%     hold on; contour(grid.lonc,grid.latc,nanmean(alk_vrtforc_flux.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[0 0],'k');
+%     hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(alk_vrtforc_flux.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end;
 %     b(6)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 %     title({'CO2 Flux due to Csat';'Alk (FW) Forcing [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 %     h(7)=subplot(337);
 %     [~,a(7)]=contourf(grid.lonc,grid.latc,nanmean(trelax_surf_flux.*ddicdth,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 %     tmp=get(a(7),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-%     hold on; contour(grid.lonc,grid.latc,nanmean(trelax_surf_flux.*ddicdth,3)'.*grid.hfacc(:,:,1)',[0 0],'k');
+%     hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(trelax_surf_flux.*ddicdth,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end;
 %     b(7)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 %     title({'CO2 Flux due to Csat';'Heat Relaxation [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 %     h(8)=subplot(338);
 %     [~,a(8)]=contourf(grid.lonc,grid.latc,nanmean(srelax_surf_flux.*ddicds,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 %     tmp=get(a(8),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-%     hold on; contour(grid.lonc,grid.latc,nanmean(srelax_surf_flux.*ddicds,3)'.*grid.hfacc(:,:,1)',[0 0],'k');
+%     hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(srelax_surf_flux.*ddicds,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end;
 %     b(8)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 %     title({'CO2 Flux due to Csat';'Salt Relaxation [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 %     h(9)=subplot(339);
 %     [~,a(9)]=contourf(grid.lonc,grid.latc,nanmean(alk_vrtrelax_flux.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 %     tmp=get(a(9),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-%     hold on; contour(grid.lonc,grid.latc,nanmean(alk_vrtrelax_flux.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[0 0],'k');
+%     hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(alk_vrtrelax_flux.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end;
 %     b(9)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
 %     title({'CO2 Flux due to Csat';'Alk (FW) Relaxation [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 %     set([a;b],'LineStyle','none')
@@ -848,75 +866,75 @@ figure
 h(1)=subplot(341);
 [~,a(1)]=contourf(grid.lonc,grid.latc,nanmean(-advtheta.*ddicdth,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(1),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(-advtheta.*ddicdth,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(1)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-advtheta.*ddicdth,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(1)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Flux due to T';'Advection [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(2)=subplot(342);
 [~,a(2)]=contourf(grid.lonc,grid.latc,nanmean(-advsalt.*ddicds,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(2),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(-advsalt.*ddicds,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(2)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-advsalt.*ddicds,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(2)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Flux due to S';'Advection [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(3)=subplot(343);
 [~,a(3)]=contourf(grid.lonc,grid.latc,nanmean(-advalk.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(3),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(-advalk.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(3)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-advalk.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(3)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Flux due to A';'Advection [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(4)=subplot(344);
 [~,a(4)]=contourf(grid.lonc,grid.latc,nanmean(-advcres,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(4),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(-advcres,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(4)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-advcres,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(4)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Flux due to Cres';'Advection [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(5)=subplot(345);
 [~,a(5)]=contourf(grid.lonc,grid.latc,nanmean(-difftheta.*ddicdth,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(5),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(-difftheta.*ddicdth,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(5)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-difftheta.*ddicdth,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(5)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Flux due to T';'Diffusion [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(6)=subplot(346);
 [~,a(6)]=contourf(grid.lonc,grid.latc,nanmean(-diffsalt.*ddicds,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(6),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(-diffsalt.*ddicds,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(6)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-diffsalt.*ddicds,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(6)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Flux due to S';'Diffusion [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(7)=subplot(347);
 [~,a(7)]=contourf(grid.lonc,grid.latc,nanmean(-diffalk.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(7),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(-diffalk.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(7)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-diffalk.*ddicdalk,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(7)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Flux due to A';'Diffusion [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(8)=subplot(348);
 [~,a(8)]=contourf(grid.lonc,grid.latc,nanmean(-diffcres,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(8),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(-diffcres,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(8)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-diffcres,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(8)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Flux due to Cres';'Diffusion [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(9)=subplot(349);
 [~,a(9)]=contourf(grid.lonc,grid.latc,nanmean(Rcp.*(po4_adv_horz+po4_adv_vert),3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(9),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(Rcp.*(po4_adv_horz+po4_adv_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(9)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(Rcp.*(po4_adv_horz+po4_adv_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(9)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Flux due to Phosphate';'Advection [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(10)=subplot(3,4,10);
 [~,a(10)]=contourf(grid.lonc,grid.latc,nanmean(Rcp.*(po4_diff_horz+po4_diff_vert),3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(10),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(Rcp.*(po4_diff_horz+po4_diff_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(10)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(Rcp.*(po4_diff_horz+po4_diff_vert),3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(10)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Flux due to Phosphate';'Diffusion [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(11)=subplot(3,4,11);
 [~,a(11)]=contourf(grid.lonc,grid.latc,nanmean(-diffcres-advcres-Rcp.*biop,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(11),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(-diffcres-advcres-Rcp.*biop,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(11)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-diffcres-advcres-Rcp.*biop,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(11)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Fluxes due to';'Cres+Bio [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 h(12)=subplot(3,4,12);
 fw_components=(advsalt+diffsalt).*ddicds+(advalk+diffalk).*ddicdalk+dic_vrt_flux;
 [~,a(12)]=contourf(grid.lonc,grid.latc,nanmean(-fw_components,3)'.*grid.hfacc(:,:,1)',[-2e-6,-2e-7:2e-8:2e-7,2e-6]);
 tmp=get(a(12),'LevelList');caxis([tmp(2) tmp(end-1)]);colormap(bluewhitered(length(tmp)-3));colorbar('YTick',tmp(2:2:end-1));
-hold on; contour(grid.lonc,grid.latc,nanmean(-fw_components,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); 
-b(12)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop
+hold on;  if isempty(strfind(obsid,'ecco2darwin')); contour(grid.lonc,grid.latc,nanmean(-fw_components,3)'.*grid.hfacc(:,:,1)',[0 0],'k'); end; 
+if strcmpi(plot_landmask,'true'); b(12)=jpcolor(grid.lonc,grid.latc,landmask.*-2e-7); axestop; end
 title({'CO2 Fluxes due to sum of';'FW Components [mol.m-2.s-1]'});xlabel('Longitude','FontSize',12);ylabel('Latitude','FontSize',12)
 set([a;b],'LineStyle','none')
 set(h,'Xlim',[min(grid.long) max(grid.lonc)],'XTickLabelMode','manual','XTickMode','manual','XTick',[min(grid.lonc):120:max(grid.long)],'XTickLabel',[floor(min(grid.long)):120:ceil(max(grid.lonc))],'YLim',[min(grid.latc) max(grid.latc)],'YTick',[-80:40:80],'FontSize',12); 
@@ -925,7 +943,7 @@ eval(['print -dpsc ',obsid,'_flux_co2_adv_diff.ps'])
 clear a b h 
 
 %% Barchart of areal integrations
-if strfind(obsid,'mitgcm')
+if grid.nx==128 && grid.ny==64
     cflux.eqst.mask=grid.hfacc(:,:,1);
     cflux.eqst.mask(:,[1:16,49:64])=NaN;
     cflux.eqst.mask(10:128,1:19)=NaN; %extra bit in Southern Ocean
@@ -1026,7 +1044,7 @@ if strfind(obsid,'mitgcm')
     cflux.wsa.mask=cflux.aabw.mask.*grid.atlantic_hfacc(:,:,1);
     cflux.wsa.lat=-65;
     cflux.wsa.lon=330;
-else    
+elseif grid.nx==360 && grid.ny>=160    
 %%%%%%%%%%%
     cflux.eqst.mask=grid.hfacc(:,:,1);
     cflux.eqst.mask(:,[1:35,127:160])=NaN;
@@ -1123,7 +1141,7 @@ else
     cflux.wsa.lat=-65;
     cflux.wsa.lon=330; 
 end
-
+%%
     % Calculate weighted average fluxes over the region
     region={'glob','npna','aabw','aaiw','eqst','nwa','nea','ea','nwp','nep','wep','eep','ei','soi','sop','soa','eai','rsp','wsa'};
     component={...
