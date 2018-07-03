@@ -48,8 +48,8 @@ whole load of verbose output.
 
 Any questions or comments, please get in contact!
 
-<a href="https://zenodo.org/badge/latestdoi/98926569"><img
-src="https://zenodo.org/badge/98926569.svg" alt="DOI"></a>
+<a href="https://doi.org/10.5281/zenodo.1304267"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.1304267.svg" alt="DOI"></a>
+
 
 # Installing MEX components
 % Check your mex installation and compiler
