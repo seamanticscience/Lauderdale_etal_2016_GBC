@@ -48,7 +48,7 @@ whole load of verbose output.
 
 Any questions or comments, please get in contact!
 
-<a href="https://doi.org/10.5281/zenodo.1304267"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.1304267.svg" alt="DOI"></a>
+<a href="https://doi.org/10.5281/zenodo.885500"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.885500.svg" alt="DOI"></a>
 
 
 # Installing MEX components
