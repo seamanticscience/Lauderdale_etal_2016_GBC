@@ -36,6 +36,10 @@ Vary *kave* to change the depth of vertical integration.
 The model fields in *model_kpp* are 12x monthly averages of a 3 degree
 configuration of MITgcm - see our paper for more details.
 
+There are two external dependencies: 
+  1. `nc_isvar` for checking variables in netcdf files, which is part of the [`mexcdf/snctools` toolbox](http://mexcdf.sourceforge.net/)
+  1. `CO2SYS` for solving the carbon system, which can be [obtained from CDIAC](https://cdiac.ess-dive.lbl.gov/ftp/co2sys/CO2SYS_calc_MATLAB_v1.1/)
+
 The MEX files, which enable interaction between *MATLAB* and *FORTRAN*
 routines for speedy calculation, should probably be recompiled for your
 system. They can then be called just like regular *MATLAB* functions (see
