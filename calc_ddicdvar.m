@@ -33,9 +33,9 @@ avar=[floor(nanmin(asurf(:))):10:ceil(nanmax(asurf(:)))]';
 % use climatological Si data for saturated carbon calculations,
 % i think it only has a small effect.
 
-if exist('~/Dropbox_Work/cfluxes_matlab/obs/woa13_annual_silicate.nc','file')
+if exist('woa13_annual_silicate.nc','file')
     % use local copy
-    addr='~/Dropbox_Work/cfluxes_matlab/obs/woa13_annual_silicate.nc';
+    addr='woa13_annual_silicate.nc';
 else
     % use remote copy
     addr='http://data.nodc.noaa.gov/thredds/dodsC/woa/WOA13/DATA/silicate/netcdf/all/1.00/woa13_all_i00_01.nc';
