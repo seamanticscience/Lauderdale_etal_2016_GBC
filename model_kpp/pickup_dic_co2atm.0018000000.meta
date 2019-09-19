@@ -1,0 +1,10 @@
+ simulation = { 'Control Run Output ver 63 GM Advective form and KPP' };
+ nDims = [   3 ];
+ dimList = [
+     1,    1,    1,
+     1,    1,    1,
+     2,    1,    2
+ ];
+ dataprec = [ 'float64' ];
+ nrecords = [     1 ];
+ timeStepNumber = [   18000000 ];
