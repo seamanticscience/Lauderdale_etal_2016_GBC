@@ -4,8 +4,8 @@
 <a href="https://doi.org/10.5281/zenodo.885500"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.885500.svg" alt="DOI"></a>
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/seamanticscience/Lauderdale_etal_2016_GBC?color=1b3370)
 ![GitHub last commit](https://img.shields.io/github/last-commit/seamanticscience/Lauderdale_etal_2016_GBC?color=f44323)
-![GitHub](https://img.shields.io/github/license/seamanticscience/Lauderdale_etal_2016_GBC?color=ffa500)
-![Dynamic link to paper](http://img.shields.io/badge/paper-doi:%2F10.1002%2F2016GB005400-lightgrey?link=http://doi.org/10.1002/2016GB005400)
+![GitHub License](https://img.shields.io/github/license/seamanticscience/Lauderdale_etal_2016_GBC?color=ffa500)
+<a href="http://doi.org/10.1002/2016GB005400"><img src="http://img.shields.io/badge/paper-doi:%2F10.1002%2F2016GB005400-lightgrey?link=http://doi.org/10.1002/2016GB005400.svg" alt="Link to paper at http://doi.org/10.1002/2016GB005400"></a>
 
 MATLAB routines for the CO2 flux diagnostics calculated using a
 steady-state model from the paper "Quantifying the drivers of
