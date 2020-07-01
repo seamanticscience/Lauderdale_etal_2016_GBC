@@ -5,12 +5,12 @@
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/seamanticscience/Lauderdale_etal_2016_GBC?color=1b3370)
 ![GitHub last commit](https://img.shields.io/github/last-commit/seamanticscience/Lauderdale_etal_2016_GBC?color=f44323)
 ![GitHub License](https://img.shields.io/github/license/seamanticscience/Lauderdale_etal_2016_GBC?color=ffa500)
-<a href="http://doi.org/10.1002/2016GB005400"><img src="http://img.shields.io/badge/paper-doi:%2F10.1002%2F2016GB005400-lightgrey?link=http://doi.org/10.1002/2016GB005400.svg" alt="Link to paper at http://doi.org/10.1002/2016GB005400"></a>
+<a href="http://doi.org/10.1002/2016GB005400"><img src="http://img.shields.io/badge/paper_link-doi:%2F10.1002%2F2016GB005400-lightgrey?link=http://doi.org/10.1002/2016GB005400.svg" alt="Link to paper at http://doi.org/10.1002/2016GB005400"></a>
 
 MATLAB routines for the CO2 flux diagnostics calculated using a
 steady-state model from the paper "Quantifying the drivers of
 ocean-atmosphere CO2 fluxes" by Jonathan Lauderdale, Stephanie
-Dutkiewicz, Ric Williams and Mick Follows. Please cite this paper if you
+Dutkiewicz, Ric Williams and Mick Follows in Global Biogeochemical Cycles. Please cite this paper (link in the badge) if you
 find these tools of use in your research.
 
 Run `cflux_diags.m` to process the supplied model output, in turn
