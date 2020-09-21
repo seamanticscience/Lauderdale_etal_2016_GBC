@@ -1,10 +1,15 @@
 # CO2 Flux diagnostic routines from Lauderdale_etal_2016_GBC
 # 
+<a href="https://doi.org/10.5281/zenodo.885500"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.885500.svg" alt="DOI"></a>
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/seamanticscience/Lauderdale_etal_2016_GBC?color=1b3370)
+![GitHub release date](https://img.shields.io/github/release-date/seamanticscience/Lauderdale_etal_2016_GBC?color=f44323)
+![GitHub License](https://img.shields.io/github/license/seamanticscience/Lauderdale_etal_2016_GBC?color=ffa500)
+<a href="http://doi.org/10.1002/2016GB005400"><img src="http://img.shields.io/badge/paper_link-doi:%2F10.1002%2F2016GB005400-lightgrey?link=http://doi.org/10.1002/2016GB005400.svg" alt="Link to paper at http://doi.org/10.1002/2016GB005400"></a>
+
 MATLAB routines for the CO2 flux diagnostics calculated using a
 steady-state model from the paper "Quantifying the drivers of
 ocean-atmosphere CO2 fluxes" by Jonathan Lauderdale, Stephanie
-Dutkiewicz, Ric Williams and Mick Follows
-(http://dx.doi.org/10.1002/2016GB005400). Please cite this paper if you
+Dutkiewicz, Ric Williams and Mick Follows in Global Biogeochemical Cycles. Please cite this paper (link in the badge) if you
 find these tools of use in your research.
 
 Run `cflux_diags.m` to process the supplied model output, in turn
@@ -54,9 +59,6 @@ you can compile the routines with the "-DDEBUG_MESSAGES" flag to get a
 whole load of verbose output.
 
 Any questions or comments, please get in contact!
-
-<a href="https://doi.org/10.5281/zenodo.885500"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.885500.svg" alt="DOI"></a>
-
 
 # Installing MEX components
 Check your mex installation and compiler ([see this Gist for help](https://gist.github.com/seamanticscience/b592fe74683f7e9dfc06914ca6536423))
