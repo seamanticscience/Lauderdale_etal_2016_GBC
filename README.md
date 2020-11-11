@@ -6,15 +6,13 @@
 ![GitHub License](https://img.shields.io/github/license/seamanticscience/Lauderdale_etal_2016_GBC?color=ffa500)
 <a href="http://doi.org/10.1002/2016GB005400"><img src="http://img.shields.io/badge/paper_link-doi:%2F10.1002%2F2016GB005400-lightgrey?link=http://doi.org/10.1002/2016GB005400.svg" alt="Link to paper at http://doi.org/10.1002/2016GB005400"></a>
 
-MATLAB routines for the CO2 flux diagnostics calculated using a
-steady-state model from the paper "Quantifying the drivers of
+Calculate CO2 flux diagnostics from a
+steady-state model following the paper "Quantifying the drivers of
 ocean-atmosphere CO2 fluxes" by Jonathan Lauderdale, Stephanie
 Dutkiewicz, Ric Williams and Mick Follows in Global Biogeochemical Cycles. Please cite this paper (link in the badge) if you
 find these tools of use in your research.
 
-Run `cflux_diags.m` to process the supplied model output, in turn
-`co2_flux_steadystate.m` is called to calculate the different components
-and plot budgets and fluxes. The framework evaluates the interplay
+The framework evaluates the interplay
 between:
   1. Surface heat and freshwater fluxes that influence the
 potential saturated carbon concentration, which depends on changes in
@@ -31,6 +29,22 @@ coarse-resolution ocean circulation and biogeochemistry model, the sum
 of the individually determined components is close to the known total
 flux of the simulation.
 
+Any questions or comments, please get in contact!
+
+## NEW: PYTHON Code (for v3.7)
+See demonstrations in the Jupyter Notebooks `CO2_Flux_Drivers_Online.ipynb` and `CO2_Flux_Drivers_Offline.ipynb`!
+
+Offline fluxes are calculated using the routines in the folder `python-fortran-interface`. Compile them with `f2py` to generate a python module:
+
+```
+>>f2py -c -m offline_flux_routines --verbose python-fortran-interface/offline_routines_python.F
+```
+
+## MATLAB Code
+Run `cflux_diags.m` to process the supplied model output, in turn
+`co2_flux_steadystate.m` is called to calculate the different components
+and plot budgets and fluxes. 
+
 There are a few options that can be changed in the `cflux_diags` driver
 routine, use *mitgcm_fluxes* and set *vertmix* to blank to reproduce the
 "online" fluxes (blue line in Figure 1d and the majority of the other
@@ -46,7 +60,7 @@ There are two external dependencies:
   1. `CO2SYS` for solving the carbon system, which can be [obtained from CDIAC](https://cdiac.ess-dive.lbl.gov/ftp/co2sys/CO2SYS_calc_MATLAB_v1.1/)
 
 The MEX files, which enable interaction between *MATLAB* and *FORTRAN*
-routines for speedy calculation, should probably be recompiled for your
+routines for speedy calculation (in the folder `matlab-fortran-interface`), should be compiled for your
 system. They can then be called just like regular *MATLAB* functions (see
 the examples below). Note that faults caused by these routines can cause
 *MATLAB* to crash without notice. I tried to minimize this risk, but just
@@ -58,9 +72,7 @@ to zero in masked regions. However, if you are experiencing problems,
 you can compile the routines with the "-DDEBUG_MESSAGES" flag to get a
 whole load of verbose output.
 
-Any questions or comments, please get in contact!
-
-# Installing MEX components
+## Installing MEX components
 Check your mex installation and compiler ([see this Gist for help](https://gist.github.com/seamanticscience/b592fe74683f7e9dfc06914ca6536423))
 ```
 >> mex -v -setup FORTRAN
